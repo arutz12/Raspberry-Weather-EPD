@@ -1,0 +1,16 @@
+[Unit]
+Description=EPD Button
+After=network.target
+
+[Service]
+Type=idle
+User=arutz
+Group=arutz
+WorkingDirectory=/home/arutz/WEATHER-EPD/pi-weather-display
+ExecStart=/home/arutz/virtualenv/weather-epd/bin/python3 /home/arutz/WEATHER-EPD/pi-weather-display/weather-button-2in7.py 
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
