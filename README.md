@@ -25,6 +25,7 @@ You should setup a ThingSpeak account, create a channel and put the _WRITE API K
 
 ## The PI and the E-Ink display
 
+For keeping things simple I created two scripts which run simultaneously. The one fetches sensor data and forecast the other handles button events.
 The refresh scipt runs every 5 minutes and generates three frames which can be displayed with the help of the buttons of the HAT.
 For the output see the screenshots dir. Sensor data is pulled from ThingSpeak, forecast from DarkSky.
 
@@ -36,28 +37,31 @@ This E-Paper HAT has four buttons which are used in this project according to th
 
 The status line contains the last display refresh time and the battery voltage.
 
-## Installation
-
-For keeping things simple I created two scripts which run simultaneously. The one fetches sensor data and forecast the other handles button events.
 I borrowed the skeleton of the refresh script from [here](https://diyprojects.io/weather-station-epaper-displaydashboard-jeedom-raspberry-pi-via-json-rpc-api/)
 
-### Steps:
+## Installation steps
+
+1. Create accounts
 + [ThingSpeak](https://thingspeak.com/) account
 + [DarkSky](https://darksky.net) account
-+ Clone the git repo into _pi_ user home.
+
+Both DarkSky and ThingSpeak are free for limited personal usage.
+
+2. Clone the git repo into _pi_ user home.
 
 ``` c++
 cd ~
 git clone https://github.com/arutz12/raspberry-weather-epd-2in7
 ```
 
-+ Optional: create a virtual python environment
-+ Install all the modules in _requirements.txt_
+3. Optional (but recommended): create a virtual python environment
+
+4. Install all the modules in _requirements.txt_
 ``` shell
 pip install -r requirements
 ```
 
-+ Install systemd services:
+5. Edit paths and install systemd services:
 
 ``` shell
 sudo cp weather.service epd-button.service /lib/systemd/system
@@ -65,7 +69,8 @@ cd /etc/systemd/system/multi-user.target.wants
 sudo ln -s /lib/systemd/system/weather.service
 sudo ln -s /lib/systemd/system/epd-button.service
 ```
-+ Rename the _.env.sample_ to _.env_ and set all the variables. 
+
+6. Rename the _.env.sample_ to _.env_ and set all the variables. 
 
 ``` c++
 LOCALE = 'en_US.UTF-8'  # change to your language locale
@@ -82,10 +87,10 @@ DARKSKY_UNITS = 'SU'  # ('AUTO', 'CA', 'UK2', 'US', 'SU') SU==metric
 TS_READ_API_KEY = ''
 TS_CHANNEL_ID = ''
 
-# Runing environment
+# Running environment
 RUN_ENV = ''  # 'production' or 'test'
 ```
-Both DarkSky and ThingSpeak are free for limited personal usage.
+
 #### Note:
 The micropython script needs your ThingSpeak _WRITE API KEY_ and the _.env_ your _READ API KEY_.
 
@@ -98,6 +103,6 @@ python weather-refresh-2in7.py
 and look for _frame[123].bmp_.
 
 ## Misc:
-If you don't want to 3D-print a case the [Pimoroni Pibow Coupé](https://shop.pimoroni.com/products/pibow-coupe-for-raspberry-pi-3-b-plus) can be a good choice.
+If you don't want to 3D-print a case the [Pimoroni Pibow Coupé](https://shop.pimoroni.com/products/pibow-coupe-for-raspberry-pi-3-b-plus) can be a good choice for RPI 2/3B/3B+.
 
 Feel free to contact me if you're stuck building this project.
