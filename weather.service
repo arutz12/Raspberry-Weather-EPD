@@ -5,8 +5,8 @@ After=network.target
 [Service]
 User=pi
 Group=pi
-WorkingDirectory=/home/pi/raspberry-weather-epd-2in7
-ExecStart=/home/pi/virtualenv/weather-epd/bin/python3 /home/pi/raspberry-weather-epd-2in7/weather-refresh-2in7.py 
+WorkingDirectory=/home/pi/Raspberry-Weather-EPD-2in7
+ExecStart=/home/pi/virtualenv/weather-epd/bin/python3 /home/pi/Raspberry-Weather-EPD-2in7/weather-refresh-2in7.py 
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
