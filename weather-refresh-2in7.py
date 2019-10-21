@@ -6,7 +6,7 @@
 # Copyright by Antal Rutz
 #
 # Documentation and full source code:
-# https://github.com/arutz74/raspberry-weather-epd-2in7
+# https://github.com/arutz12/raspberry-weather-epd-2in7
 # 
 # Base code and ideas from:
 # English version https://diyprojects.io/weather-station-epaper-displaydashboard-jeedom-raspberry-pi-via-json-rpc-api/

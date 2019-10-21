@@ -3,9 +3,8 @@ Description=Weather Refresh
 After=network.target
 
 [Service]
-Type=idle
-User=arutz
-Group=arutz
+User=pi
+Group=pi
 WorkingDirectory=/home/pi/WEATHER-EPD
 ExecStart=/home/pi/virtualenv/weather-epd/bin/python3 /home/pi/WEATHER-EPD/weather-refresh-2in7.py 
 ExecReload=/bin/kill -s HUP $MAINPID
