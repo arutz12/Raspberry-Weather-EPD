@@ -18,9 +18,9 @@ import network
 import urequests
 
 # PINS
-PIN_D1 = 5 # LED
-PIN_D2 = 4 # Temp
-PIN_A0 = 0 # ADC pin
+PIN_D1 = 5 # LED / just for testing
+PIN_D2 = 4 # Temp sensor PIN
+PIN_A0 = 0 # ADC PIN (battery)
 
 # ThingSpeak fields
 FIELD_TEMP = 1  # TS Temperature field
