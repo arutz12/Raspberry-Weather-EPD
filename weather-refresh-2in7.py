@@ -32,6 +32,7 @@ LOCALE = os.environ.get('LOCALE')
 locale.setlocale(locale.LC_TIME, LOCALE)
 
 FORECAST_TITLE = os.environ.get('FORECAST_TITLE')
+RUN_ENV = os.environ.get('RUN_ENV')
 
 # globals
 folder_img = os.path.join(base_dir, 'icons')
@@ -47,9 +48,12 @@ column2_5 = 200
 column2 = 132
 column3 = 198
 bottom = 140
-test_mode = True
 DEBUG = True
 SLEEPTIME = 300
+
+test_mode = False
+if RUN_ENV == 'test':
+    test_mode = True
 
 if DEBUG:
     from pprint import pprint
