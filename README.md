@@ -1,5 +1,7 @@
 # Weather station for Raspberry with E-Paper HAT
 
+![RPI_Weather_EPD](./screenshots/raspi-weather-small1.jpg)
+
 This is a combined RaspberryPi and ESP8266 project for measuring temperature and displaying sensor data and forecast info on the Waveshare 2.7inch E-Paper HAT.
 
 The microcontroller uploads outside temperature to an IoT data collector then the Raspberry Pi collects it along weather forecast and shows them on a nice E-Paper display. All you need to do is to buy the stuff and follow the installation steps. Some bit of extra reading is needed if your are not familiar with ESP8266 development boards and micropython however the Raspberry setup is far easier and you can get the current data from the weather provider as well and leave the ESP stuff. The sensor just adds accuracy and a nice learning experience regarding microcontrollers.
@@ -133,3 +135,6 @@ WIFI_DNS = '192.168.1.1'
 If you don't want to 3D-print a case the [Pimoroni Pibow Coupé](https://shop.pimoroni.com/products/pibow-coupe-for-raspberry-pi-3-b-plus) can be a good choice for RPI 2/3B/3B+.
 
 Feel free to contact me if you're stuck anywhere while building this project.
+
+![RPI_Weather_EPD2](./screenshots/raspi-weather-small2.jpg)
+![RPI_Weather_EPD3](./screenshots/raspi-weather-small3.jpg)
