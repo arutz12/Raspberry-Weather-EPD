@@ -1,4 +1,4 @@
-# coding: utf-8
+ coding: utf-8
 #
 # Weather station display for Raspberry and Waveshare 2.7" e-Paper display
 # (fetch ThingSpeak data)
@@ -18,9 +18,9 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 dotenv_path = os.path.join(base_dir, '.env')
 load_dotenv(dotenv_path)
 
-TS_API_KEY = os.environ.get('TS_API_KEY')
+TS_READ_API_KEY = os.environ.get('TS_API_KEY')
 TS_CHANNEL_ID = os.environ.get('TS_CHANNEL_ID')
-TS_READ_URL = 'https://api.thingspeak.com/channels/{}/feeds.json?api_key={}&results=1'.format(TS_CHANNEL_ID, TS_API_KEY)
+TS_READ_URL = 'https://api.thingspeak.com/channels/{}/feeds.json?api_key={}&results=1'.format(TS_CHANNEL_ID, TS_READ_API_KEY)
 
 
 def fetchThingSpeak():
