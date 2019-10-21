@@ -27,6 +27,7 @@ This E-Paper HAT has four buttons which are used in this project according to th
 4. clear display
 
 The status line contains the last display refresh time and the battery voltage.
+The screenshots were taken the RPi set to Hungarian language - you can alter it very easily, you'll see below.
 
 I borrowed the skeleton of the refresh script from [here](https://diyprojects.io/weather-station-epaper-displaydashboard-jeedom-raspberry-pi-via-json-rpc-api/)
 
@@ -63,9 +64,11 @@ sudo ln -s /lib/systemd/system/epd-button.service
 
 ### 6. Rename the _.env.sample_ to _.env_ and set all the variables 
 
+_LOCALE_ determines the name of the days in the 4-days forecast frame and the _DARKSKY_LANGUAGE_ is responsible for DarkSky weather condition texts.
+
 ``` c++
 LOCALE = 'en_US.UTF-8'  # change to your language locale
-FORECAST_TITLE = '4-day forecast'  # or change to your language
+FORECAST_TITLE = '4-days forecast'  # or change to your language
 
 # DarkSky
 DARKSKY_API_KEY = ''
