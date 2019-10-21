@@ -12,7 +12,7 @@ It is mainly a fun project which you can extend freely. I hope you'll enjoy buil
 ## The sensor
 The sensor station is a Wemos Mini D1 ESP8266-based board operating via 2xAA step-up to 5V. The temperature sensor is a DS18B20 which is connected to the D1 pin and the battery voltage is measured on the A0 ADC. The sensor weaks up from deepsleep every every five minutes and sends the data to a [ThingSpeak](https://thingspeak.com/) channel. Depending on your powering setup it can last from weeks to months. The Wemos board runs [micropython](http://micropython.org/) which is far easier to use (for me) than Arduino's C++. The script is fairly simple and can be easily customized for more complex DHT sensors - micropython has everything you need for that, just head over to the documentation.
 
-##### Note
+#### Note
 you will need the _urequests_ micropython module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
 
 I put everything (sensor, devboard, batteries) into a waterresistant box and found some place outside, didn't bothered with the aesthetics. (If you're interested I can thoroughly detail the sensor cabling however you can find tons of info on the net, you need a breadboard a bunch of jumper cables and you're done.)
@@ -41,27 +41,27 @@ I borrowed the skeleton of the refresh script from [here](https://diyprojects.io
 
 ## Installation steps
 
-1. Create accounts
+### 1. Create accounts
 + [ThingSpeak](https://thingspeak.com/) account
 + [DarkSky](https://darksky.net) account
 
 Both DarkSky and ThingSpeak are free for limited personal usage.
 
-2. Clone the git repo into _pi_ user home.
+### 2. Clone the git repo into _pi_ user home.
 
 ``` c++
 cd ~
 git clone https://github.com/arutz12/raspberry-weather-epd-2in7
 ```
 
-3. Optional (but recommended): create a virtual python environment
+### 3. Optional (but recommended): create a virtual python environment
 
-4. Install all the modules in _requirements.txt_
+### 4. Install all the modules in _requirements.txt_
 ``` shell
 pip install -r requirements
 ```
 
-5. Edit paths and install systemd services:
+### 5. Edit paths and install systemd services:
 
 ``` shell
 sudo cp weather.service epd-button.service /lib/systemd/system
@@ -70,7 +70,7 @@ sudo ln -s /lib/systemd/system/weather.service
 sudo ln -s /lib/systemd/system/epd-button.service
 ```
 
-6. Rename the _.env.sample_ to _.env_ and set all the variables. 
+### 6. Rename the _.env.sample_ to _.env_ and set all the variables. 
 
 ``` c++
 LOCALE = 'en_US.UTF-8'  # change to your language locale
