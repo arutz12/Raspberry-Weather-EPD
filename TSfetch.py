@@ -18,7 +18,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 dotenv_path = os.path.join(base_dir, '.env')
 load_dotenv(dotenv_path)
 
-TS_READ_API_KEY = os.environ.get('TS_API_KEY')
+TS_READ_API_KEY = os.environ.get('TS_READ_API_KEY')
 TS_CHANNEL_ID = os.environ.get('TS_CHANNEL_ID')
 TS_READ_URL = 'https://api.thingspeak.com/channels/{}/feeds.json?api_key={}&results=1'.format(TS_CHANNEL_ID, TS_READ_API_KEY)
 
@@ -32,6 +32,9 @@ def fetchThingSpeak():
         return {'TEMP': 0, 'VOLT': 0, 'UPDATED': 0}
 
     ts_result = json.loads(r.content)
+    if not ts_result:
+        return {'TEMP': 0, 'VOLT': 0, 'UPDATED': 0}
+
     TS_DATA['TEMP'] = ts_result['feeds'][0]['field1']
     TS_DATA['VOLT'] = ts_result['feeds'][0]['field2']
     TS_DATA['UPDATED'] = ts_result['feeds'][0]['created_at']
