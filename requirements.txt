@@ -8,7 +8,6 @@ darksky-weather==1.5.0
 gpiozero==1.5.1
 idna==2.8
 multidict==4.5.2
-olefile==0.46
 Pillow==6.2.0
 python-dotenv==0.10.3
 pytz==2019.1
