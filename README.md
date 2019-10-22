@@ -21,15 +21,42 @@ The refresh scipt runs every 5 minutes and generates three frames which can be d
 For the output see the screenshots dir. Sensor data is pulled from ThingSpeak, forecast from DarkSky.
 
 This E-Paper HAT has four buttons which are used in this project according to the followings:
-1. Frame1: sensor data and todays min-max temperature, wind and precipitation forecast along with short weather condition text
-2. Frame2: sensor data, humidity, air pressure, wind, sunrise/sunset
-3. Frame3: 4-day weather forecast
-4. clear display
+__1.__ Frame1: sensor temp and today's min-max temperature, current wind speed and direction and precipitation forecast along for today with short weather condition text
+__2.__ Frame2: sensor temp, current humidity, air pressure, windspeed and direction, sunrise/sunset
+__3.__ Frame3: 4-day weather forecast
+__4.__ Clear display
 
 The status line contains the last display refresh time and the battery voltage.
 The screenshots were taken the RPi set to Hungarian language - you can alter it very easily, you'll see below.
 
 I borrowed the skeleton of the refresh script from [here](https://diyprojects.io/weather-station-epaper-displaydashboard-jeedom-raspberry-pi-via-json-rpc-api/)
+
+## Scripts
+
+
+### _TSfetch.py_
+
+Collects sensor data from ThingSpeak. If you want to test just run it standalone:
+
+    python TSfetch.py
+
+### _DSweather.py_
+
+Gathers weather info from DarSky. It fetches current weather and 4-days forecast. Testing:
+
+    python DSweather.py
+
+### _weather-button-2in7.py_
+
+Listens to button events and according to the input it clears the display or shows the relevant frame.
+
+### _weather-refresh-2in7.py_
+
+The main script creates frames from data collected from ThingSpeak and DarkSky. It runs every 5 minutes and refreshes the E-Paper display with the first frame.
+For verbose output you should toggle the _DEBUG_ variable and for testing without E-Paper HAT the *test_mode* variable shoud be set to _True_.
+
+    python weather-refresh-2in7.py
+
 
 ## Installation steps
 

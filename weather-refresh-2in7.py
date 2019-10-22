@@ -48,7 +48,7 @@ column2_5 = 200
 column2 = 132
 column3 = 198
 bottom = 140
-DEBUG = True
+DEBUG = False
 SLEEPTIME = 300
 
 test_mode = False
