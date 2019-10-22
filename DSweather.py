@@ -75,7 +75,7 @@ def fetchDarkSkyWeather():
     CURRENT = {
         'summary':              cur_weather.summary,
         'icon':                 cur_weather.icon,
-        'precip_probability':   round(int(cur_weather.precip_probability * 100), -1),
+        'precip_probability':   round(int(daily_weather[0].precip_probability * 100), -1),
         'precip_type':          cur_weather.precip_type,
         'temperature':          cur_weather.temperature,
         'humidity':             int(cur_weather.humidity * 100),
