@@ -4,7 +4,7 @@
 
 This is a combined RaspberryPi and ESP8266 project for measuring temperature and displaying sensor data and forecast info on the Waveshare 2.7inch E-Paper HAT.
 
-The microcontroller uploads outside temperature to an IoT data collector then the Raspberry Pi collects it along weather forecast and shows them on a nice E-Paper display. All you need to do is to buy the stuff and follow the installation steps. Some bit of extra reading is needed if your are not familiar with ESP8266 development boards and micropython however the Raspberry setup is far easier and you can get the current data from the weather provider as well and leave the ESP stuff. The sensor just adds accuracy and a nice learning experience regarding microcontrollers.
+The microcontroller uploads outside temperature to a public IoT data collector site then the Raspberry Pi collects it along with  weather forecast and shows them on a nice E-Paper display. All you need to do is to get the stuff and follow the installation steps. Some bit of extra reading is needed if your are not familiar with ESP8266 development boards and micropython however the Raspberry setup is far easier and you can get the current data from the weather provider as well and leave the ESP stuff. The sensor just adds accuracy and a nice learning experience regarding microcontrollers.
 
 It is mainly a fun project which you can extend freely. I hope you'll enjoy building it as well.
 
