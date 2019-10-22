@@ -88,7 +88,7 @@ RUN_ENV = ''  # 'production' or 'test'
 #### Note:
 The micropython script needs your ThingSpeak _WRITE API KEY_ and the _.env_ your _READ API KEY_.
 
-## Testing:
+### Testing:
 You can test the whole thing on your own machine (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
 ``` shell
 python weather-refresh-2in7.py
