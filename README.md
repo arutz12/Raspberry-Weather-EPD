@@ -6,7 +6,7 @@ This is a combined RaspberryPi and ESP8266 project for measuring temperature and
 
 The microcontroller uploads outside temperature to an IoT data collector then the Raspberry Pi collects it along weather forecast and shows them on a nice E-Paper display. All you need to do is to buy the stuff and follow the installation steps. Some bit of extra reading is needed if your are not familiar with ESP8266 development boards and micropython however the Raspberry setup is far easier and you can get the current data from the weather provider as well and leave the ESP stuff. The sensor just adds accuracy and a nice learning experience regarding microcontrollers.
 
-It is mainly a fun project which you can extend freely. I hope you'll enjoy building it as well, it was great fun for me.
+It is mainly a fun project which you can extend freely. I hope you'll enjoy building it as well.
 
 ### The stuff you need:
 + [ESP8266](https://en.wikipedia.org/wiki/ESP8266) development board (I prefer the [Wemos Mini D1](https://wiki.wemos.cc/products:d1:d1_mini))
@@ -88,7 +88,7 @@ RUN_ENV = ''  # 'production' or 'test'
 #### Note:
 The micropython script needs your ThingSpeak _WRITE API KEY_ and the _.env_ your _READ API KEY_.
 
-## Testing:
+### Testing:
 You can test the whole thing on your own machine (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
 ``` shell
 python weather-refresh-2in7.py
