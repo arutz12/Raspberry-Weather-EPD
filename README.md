@@ -165,6 +165,8 @@ WIFI_DNS = '192.168.1.1'
 ## Misc:
 If you don't want to 3D-print a case the [Pimoroni Pibow Coupé](https://shop.pimoroni.com/products/pibow-coupe-for-raspberry-pi-3-b-plus) can be a good choice for RPI 2/3B/3B+.
 
-Feel free to contact me if you're stuck anywhere while building this project.
+## Contact
+
+Feel free to contact me if you're stuck anywhere while building this project or just want to give me feedback on that. You can reach me at `antal.rutz@gmail.com`
 
 ![RPI_Weather_EPD3](./screenshots/raspi-weather-small3.jpg)
