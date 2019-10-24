@@ -29,7 +29,7 @@ This E-Paper HAT has four buttons which are used in this project according to th
 The status line contains the last display refresh time and the battery voltage.
 The screenshots were taken the RPi set to Hungarian language - you can alter it very easily, you'll see below.
 
-I borrowed the skeleton of the refresh script from [here](https://diyprojects.io/weather-station-epaper-displaydashboard-jeedom-raspberry-pi-via-json-rpc-api/)
+I borrowed the skeleton of the refresh script from [here](https://diyprojects.io/weather-station-epaper-displaydashboard-jeedom-raspberry-pi-via-json-rpc-api/).
 
 ### Scripts
 
