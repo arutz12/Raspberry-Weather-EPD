@@ -114,7 +114,7 @@ RUN_ENV = ''  # 'production' or 'test'
 #### Notes:
 > + The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented as current temperature.
 > + The units for temperature and wind speed will be selected automatically.
-> + The _micropython_ script needs your ThingSpeak _WRITE API KEY_ and you must put your ThingSpeak _READ API KEY_ into the _.env_.
+> + The _micropython_ script needs your ThingSpeak *WRITE_API_KEY* and you must put your ThingSpeak *READ_API_KEY* into the _.env_ file.
 
 ### Testing:
 You can test the whole thing on your own PC (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
@@ -125,18 +125,18 @@ python weather-refresh-2in7.py
 and look for _frame[123].bmp_. In this case the EPD and Raspberry-specific stuff is not included, only the frames are rendered which you can check with an image viewer. 
 
 ## The sensor
-The sensor station is a Wemos Mini D1 ESP8266-based board operating via 2xAA step-up to 5V. The temperature sensor is a DS18B20 which is connected to the D1 pin and the battery voltage is measured on the A0 ADC. The sensor wakes up from deepsleep every every five minutes and sends the data to a [ThingSpeak](https://thingspeak.com/) channel. Depending on your powering setup the measuring unit can last from weeks to months without changing batteries. The Wemos board runs [micropython](http://micropython.org/) which is far easier to use (for me) than Arduino's C++. The script is fairly simple and can be easily customized for more complex DHT sensors - micropython has everything you need for that, just head over to the documentation.
+The sensor station is a Wemos Mini D1 ESP8266-based board operating via 2xAA step-up to 5V. The temperature sensor is a DS18B20 which is connected to the D1 pin and the battery voltage is measured on the A0 ADC. The sensor wakes up from deepsleep every every five minutes and sends the data to a [ThingSpeak](https://thingspeak.com/) channel. Depending on your powering setup the measuring unit can last from weeks to months without changing batteries. The Wemos board runs [micropython](http://micropython.org/) which is far easier to use (for me) than Arduino's C++. The script is fairly simple and can be easily customized for more complex DHT sensors - _micropython_ has everything you need for that, just head over to the documentation.
 
 #### Note
-> You will need the _urequests_ _micropython_ module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
+> You will need the __urequests__ _micropython_ module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
 
 I put everything (sensor, devboard, batteries) into a waterresistant box and found some place outside, didn't bothered with the aesthetics. (If you're interested I can thoroughly detail the sensor cabling however you can find tons of info on the net. You just need a breadboard, a bunch of jumper cables, connect the sensor and battery to the correct pins and you're done. Without any soldering.)
 
 ### Sensor setup
 
-You should edit the global variables of the micrpython script which relate to Wifi (I configured it with static IP for quicker connection setup), ThingSpeak and sensor PIN.
+You should edit the global variables of the _+micrpython_ script which relate to Wifi (I configured it with static IP for quicker connection setup), ThingSpeak and sensor PIN.
 Copy the script to the root of the board as _main.py_. (I use [RSHELL](https://github.com/dhylands/rshell) for that.)
-You should setup a ThingSpeak account, create a channel and put the _WRITE API KEY_ into the script file.
+You should setup a ThingSpeak account, create a channel and put the *WRITE_API_KEY* into the script file.
 
 #### Edit global variables
 
