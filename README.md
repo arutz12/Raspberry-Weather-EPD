@@ -169,4 +169,5 @@ If you don't want to 3D-print a case the [Pimoroni Pibow Coupé](https://shop.pi
 
 Feel free to contact me if you're stuck anywhere while building this project or just want to give me feedback on that. You can reach me at `antal.rutz@gmail.com`
 
+
 ![RPI_Weather_EPD3](./screenshots/raspi-weather-small3.jpg)
