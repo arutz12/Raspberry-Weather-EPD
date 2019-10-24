@@ -1,4 +1,4 @@
- coding: utf-8
+# coding: utf-8
 #
 # Weather station display for Raspberry and Waveshare 2.7" e-Paper display
 # (fetch ThingSpeak data)
