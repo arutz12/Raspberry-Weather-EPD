@@ -112,7 +112,7 @@ RUN_ENV = ''  # 'production' or 'test'
 ```
 
 #### Notes:
-> + The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented for current temperature.
+> + The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented as current temperature.
 > + The units for temperature and wind speed will be selected automatically.
 > + The _micropython_ script needs your ThingSpeak _WRITE API KEY_ and you must put your ThingSpeak _READ API KEY_ into the _.env_.
 
