@@ -52,6 +52,7 @@ DEBUG = False
 SLEEPTIME = 300
 
 test_mode = False
+
 if RUN_ENV == 'test':
     test_mode = True
 
@@ -181,12 +182,17 @@ def getWeatherData():
 
 
 def clearDisplay():
+    debug('TIME: ' + str(datetime.now()))
+    debug('Clear Display')
     epd.Clear(0xFF)
 
 
-def displayFrame(mask):
+def displayFrame(frame_name):
     # clearDisplay()
-    epd.display(epd.getbuffer(mask))
+    debug('TIME: ' + str(datetime.now()))
+    debug('Displaying ' + frame_name + '.bmp')
+    frame = Image.open(os.path.join(base_dir, frame_name + '.bmp'))
+    epd.display(epd.getbuffer(frame))
 
 
 def updateFrame1(weather):
@@ -237,8 +243,6 @@ def updateFrame1(weather):
 
     debug('Update frame1')
     mask.save(os.path.join(base_dir, 'frame1.bmp'), "bmp")
-    if not test_mode:
-        displayFrame(mask)
 
 
 def updateFrame2(weather):
@@ -387,6 +391,24 @@ def updateFrame3(weather):
 
 
 if __name__ == "__main__":
+    if not test_mode:
+        from gpiozero import Button
+        from functools import partial
+
+        key1 = 5
+        key2 = 6
+        key3 = 13
+        key4 = 19
+        keys = (key1, key2, key3, key4)
+        buttons = []
+
+        for key in keys:
+            buttons.append(Button(key))
+
+        for b in range(3):
+            buttons[b].when_pressed = partial(displayFrame, 'frame' + str(b + 1))
+        buttons[3].when_pressed = clearDisplay
+
     while True:
         try:
             w = getWeatherData()
@@ -400,4 +422,7 @@ if __name__ == "__main__":
             updateFrame3(w)
         if test_mode:
             break
+        else:
+            displayFrame('frame1')
+
         time.sleep(SLEEPTIME)
