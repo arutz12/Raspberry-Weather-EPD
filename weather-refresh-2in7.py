@@ -34,6 +34,10 @@ locale.setlocale(locale.LC_TIME, LOCALE)
 FORECAST_TITLE = os.environ.get('FORECAST_TITLE')
 RUN_ENV = os.environ.get('RUN_ENV')
 
+SENSOR = False
+if os.environ.get('SENSOR') == '1':
+    SENSOR = True
+
 # globals
 folder_img = os.path.join(base_dir, 'icons')
 cond_height = 100
@@ -55,6 +59,7 @@ test_mode = False
 
 if RUN_ENV == 'test':
     test_mode = True
+    DEBUG = True
 
 if DEBUG:
     from pprint import pprint
@@ -96,8 +101,23 @@ sunrise = sunrise.resize((icon_height, icon_width))
 sunset = sunset.resize((icon_height, icon_width))
 precip = precip.resize((icon_height+10, icon_width+10))
 
+TEMP_UNIT = 'C'
+SPEED_UNIT = 'km/h'
 
-# w,h = condition.size
+UNIT_TYPES = {
+    'si' : {
+        'temp': 'C',
+        'speed': 'km/h'
+    },
+    'uk2' : {
+        'temp': 'C',
+        'speed': 'mi/h'
+    },
+    'us': {
+        'temp': 'F',
+        'speed': 'mi/h'
+    }
+}
 
 def debug(val):
     if DEBUG:
@@ -131,13 +151,23 @@ def findIcon(cond):
 
 
 def getWeatherData():
+    global TEMP_UNIT
+    global SPEED_UNIT
+    global UNIT_TYPES
 
     from DSweather import fetchDarkSkyWeather
-    from TSfetch import fetchThingSpeak
+
+    if SENSOR:
+        from TSfetch import fetchThingSpeak
+        ts_data = fetchThingSpeak()
+        debug(ts_data)
 
     current, daily = fetchDarkSkyWeather()
-    ts_data = fetchThingSpeak()
-    debug(ts_data)
+
+    unit_type = current['units']
+    if unit_type in UNIT_TYPES:
+        TEMP_UNIT = UNIT_TYPES[unit_type]['temp']
+        SPEED_UNIT = UNIT_TYPES[unit_type]['speed']
 
     weather = {
         'conditiontxt': current['summary'],
@@ -147,32 +177,36 @@ def getWeatherData():
         'pressure': current['pressure'],
         'humidity': current['humidity'],
         'precip': current['precip_probability'],
-        'currTemp': str(ts_data['TEMP']),
         'tempMin': str(daily[0]['temperature_min']),
         'tempMax': str(daily[0]['temperature_max']),
         'windSpeed': current['wind_speed'],
         'windDir': str(current['wind_bearing']),
         'windDirTxt': str(current['wind_direction']),
-        "conditionDay1": findIcon(daily[0]['icon']),
-        "conditionDay2": findIcon(daily[1]['icon']),
-        "conditionDay3": findIcon(daily[2]['icon']),
-        "conditionDay4": findIcon(daily[3]['icon']),
-        "condDay1Txt": daily[0]['summary'],
-        "condDay2Txt": daily[1]['summary'],
-        "condDay3Txt": daily[2]['summary'],
-        "condDay4Txt": daily[3]['summary'],
-        "tempMinDay1": str(daily[0]['temperature_min']),
-        "tempMinDay2": str(daily[1]['temperature_min']),
-        "tempMinDay3": str(daily[2]['temperature_min']),
-        "tempMinDay4": str(daily[3]['temperature_min']),
-        "tempMaxDay1": str(daily[0]['temperature_max']),
-        "tempMaxDay2": str(daily[1]['temperature_max']),
-        "tempMaxDay3": str(daily[2]['temperature_max']),
-        "tempMaxDay4": str(daily[3]['temperature_max'])
+        'conditionDay1': findIcon(daily[0]['icon']),
+        'conditionDay2': findIcon(daily[1]['icon']),
+        'conditionDay3': findIcon(daily[2]['icon']),
+        'conditionDay4': findIcon(daily[3]['icon']),
+        'condDay1Txt': daily[0]['summary'],
+        'condDay2Txt': daily[1]['summary'],
+        'condDay3Txt': daily[2]['summary'],
+        'condDay4Txt': daily[3]['summary'],
+        'tempMinDay1': str(daily[0]['temperature_min']),
+        'tempMinDay2': str(daily[1]['temperature_min']),
+        'tempMinDay3': str(daily[2]['temperature_min']),
+        'tempMinDay4': str(daily[3]['temperature_min']),
+        'tempMaxDay1': str(daily[0]['temperature_max']),
+        'tempMaxDay2': str(daily[1]['temperature_max']),
+        'tempMaxDay3': str(daily[2]['temperature_max']),
+        'tempMaxDay4': str(daily[3]['temperature_max'])
     }
 
+    if SENSOR:
+        weather['currTemp'] = str(ts_data['TEMP'])
+        weather['battery'] = str(ts_data['VOLT'])
+    else:
+        weather['currTemp'] = current['temperature']
+
     weather['city'] = 'Budapest'
-    weather['battery'] = str(ts_data['VOLT'])
 
     debug('TIME: ' + str(datetime.now()))
     debug(weather)
@@ -211,7 +245,7 @@ def updateFrame1(weather):
     mask.paste(condition, (0, 0), condition)
     # draw.rectangle((cond_width, 0, EPD_HEIGHT, 50), fill=0)
     # draw.text((cond_width + border * 2, 0), str(weather['currTemp']) + '°C', font=fontExtraBig, fill=1)
-    draw.text((cond_width + border * 2, 0), str(weather['currTemp']) + '°C', font=fontExtraBig, fill=0)
+    draw.text((cond_width + border * 2, 0), str(weather['currTemp']) + '°' + TEMP_UNIT, font=fontExtraBig, fill=0)
 
     condRows = wrap(weather['conditiontxt'], width=14)[:2]
     draw.text((cond_width + border*2, 47), condRows[0], font=fontBig, fill=0)
@@ -219,8 +253,8 @@ def updateFrame1(weather):
         draw.text((cond_width + border*2, 72), condRows[1], font=fontBig, fill=0)
 
     mask.paste(temperature, (border*3, 115), temperature)
-    draw.text((border + icon_width + border * 2, 7 * row_height - 4), str(weather['tempMinDay1']) + '°C', font=fontMedium, fill=0)
-    draw.text((border + icon_width + border * 2, 8 * row_height - 4), str(weather['tempMaxDay1']) + '°C', font=fontMedium, fill=0)
+    draw.text((border + icon_width + border * 2, 7 * row_height - 4), str(weather['tempMinDay1']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
+    draw.text((border + icon_width + border * 2, 8 * row_height - 4), str(weather['tempMaxDay1']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
 
     mask.paste(precip, (column1_5, 115), precip)
     draw.text((column1_5+35, 117), str(weather['precip']) + '%', font=fontMedium, fill=0)
@@ -228,7 +262,7 @@ def updateFrame1(weather):
     wind_dir = direction.rotate(float(weather['windDir']))
     mask.paste(wind_dir, (column2_5, 115), wind_dir)
     draw.text((column2_5 + 35, 117), weather['windDirTxt'], font=fontMedium, fill=0)
-    draw.text((column2_5, bottom), str(int(weather['windSpeed'])) + 'km/h', font=fontMedium, fill=0)
+    draw.text((column2_5, bottom), str(int(weather['windSpeed'])) + SPEED_UNIT, font=fontMedium, fill=0)
 
     draw.line((cond_width, 50, EPD_HEIGHT, 50), fill=0)
     draw.line((0, cond_height, EPD_HEIGHT, cond_height), fill=0)
@@ -239,7 +273,8 @@ def updateFrame1(weather):
     refresh_date = time.strftime("%Y-%m-%d")
     # refresh_date = time.strftime("%Y. %B %-d. %A")
     draw.text((border, EPD_WIDTH - 18), refresh_date + ' ' + refresh_time, font=fontSmall, fill=0)
-    draw.text((column3 - border*2, EPD_WIDTH - 18), 'BAT: ' + weather['battery'] + 'V', font=fontSmall, fill=0)
+    if SENSOR:
+        draw.text((column3 - border*2, EPD_WIDTH - 18), 'BAT: ' + weather['battery'] + 'V', font=fontSmall, fill=0)
 
     debug('Update frame1')
     mask.save(os.path.join(base_dir, 'frame1.bmp'), "bmp")
@@ -272,11 +307,11 @@ def updateFrame2(weather):
     mask.paste(humidity, (column1, 110), humidity)
     mask.paste(pressure, (column2, 110), pressure)
     mask.paste(wind_dir, (column3, 110), wind_dir)
-    draw.text((border, bottom), str(weather['currTemp']) + '°C', font=fontMedium, fill=0)
+    draw.text((border, bottom), str(weather['currTemp']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
     draw.text((column1, bottom), str(weather['humidity']) + '%', font=fontMedium, fill=0)
     draw.text((column2, bottom), str(weather['pressure']) + 'kPa', font=fontMedium, fill=0)
     draw.text((column3 + 35, 110), weather['windDirTxt'], font=fontMedium, fill=0)
-    draw.text((column3, bottom), str(int(weather['windSpeed'])) + 'km/h', font=fontMedium, fill=0)
+    draw.text((column3, bottom), str(int(weather['windSpeed'])) + SPEED_UNIT, font=fontMedium, fill=0)
 
     # Lines
     draw.line((0, cond_height, EPD_HEIGHT, cond_height), fill=0)
@@ -287,7 +322,8 @@ def updateFrame2(weather):
     refresh_date = time.strftime("%Y-%m-%d")
     # refresh_date = time.strftime("%Y. %B %-d. %A")
     draw.text((border, EPD_WIDTH - 18), refresh_date + ' ' + refresh_time, font=fontSmall, fill=0)
-    draw.text((column3 - border*2, EPD_WIDTH - 18), 'BAT: ' + weather['battery'] + 'V', font=fontSmall, fill=0)
+    if SENSOR:
+        draw.text((column3 - border*2, EPD_WIDTH - 18), 'BAT: ' + weather['battery'] + 'V', font=fontSmall, fill=0)
 
     # mask = mask.rotate(90)
 
@@ -323,8 +359,8 @@ def updateFrame3(weather):
     else:
         draw.text((border, 6 * row_height+3), prev1, font=fontExtraSmall, fill=0)
 
-    draw.text((border, 7 * row_height+1), str(weather['tempMinDay1']) + '°C', font=fontMedium, fill=0)
-    draw.text((border, 8 * row_height+2), str(weather['tempMaxDay1']) + '°C', font=fontMedium, fill=0)
+    draw.text((border, 7 * row_height+1), str(weather['tempMinDay1']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
+    draw.text((border, 8 * row_height+2), str(weather['tempMaxDay1']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
 
     # Day1
     date = datetime.now() + timedelta(days=1)
@@ -341,8 +377,8 @@ def updateFrame3(weather):
     else:
         draw.text((border + column1, 6 * row_height+3), prev1, font=fontExtraSmall, fill=0)
 
-    draw.text((border + column1, 7 * row_height+1), str(weather['tempMinDay2']) + '°C', font=fontMedium, fill=0)
-    draw.text((border + column1, 8 * row_height+2), str(weather['tempMaxDay2']) + '°C', font=fontMedium, fill=0)
+    draw.text((border + column1, 7 * row_height+1), str(weather['tempMinDay2']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
+    draw.text((border + column1, 8 * row_height+2), str(weather['tempMaxDay2']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
 
     # Day2
     date = datetime.now() + timedelta(days=2)
@@ -359,8 +395,8 @@ def updateFrame3(weather):
     else:
         draw.text((border + column2, 6 * row_height+3), prev1, font=fontExtraSmall, fill=0)
 
-    draw.text((border + column2, 7 * row_height+1), str(weather['tempMinDay3']) + '°C', font=fontMedium, fill=0)
-    draw.text((border + column2, 8 * row_height+2), str(weather['tempMaxDay3']) + '°C', font=fontMedium, fill=0)
+    draw.text((border + column2, 7 * row_height+1), str(weather['tempMinDay3']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
+    draw.text((border + column2, 8 * row_height+2), str(weather['tempMaxDay3']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
 
     # Day3
     date = datetime.now() + timedelta(days=3)
@@ -377,14 +413,15 @@ def updateFrame3(weather):
     else:
         draw.text((border + column3, 6 * row_height+3), prev1, font=fontExtraSmall, fill=0)
 
-    draw.text((border + column3, 7 * row_height+1), str(weather['tempMinDay4']) + '°C', font=fontMedium, fill=0)
-    draw.text((border + column3, 8 * row_height+2), str(weather['tempMaxDay4']) + '°C', font=fontMedium, fill=0)
+    draw.text((border + column3, 7 * row_height+1), str(weather['tempMinDay4']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
+    draw.text((border + column3, 8 * row_height+2), str(weather['tempMaxDay4']) + '°' + TEMP_UNIT, font=fontMedium, fill=0)
 
     refresh_time = time.strftime("%H:%M")
     refresh_date = time.strftime("%Y-%m-%d")
     # refresh_date = time.strftime("%Y. %B %-d. %A")
     draw.text((border, EPD_WIDTH - 18), refresh_date + ' ' + refresh_time, font=fontSmall, fill=0)
-    draw.text((column3 - border*2, EPD_WIDTH - 18), 'BAT: ' + weather['battery'] + 'V', font=fontSmall, fill=0)
+    if SENSOR:
+        draw.text((column3 - border*2, EPD_WIDTH - 18), 'BAT: ' + weather['battery'] + 'V', font=fontSmall, fill=0)
 
     debug('Update frame3')
     mask.save(os.path.join(base_dir, 'frame3.bmp'), "bmp")

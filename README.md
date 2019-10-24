@@ -104,20 +104,25 @@ DARKSKY_UNITS = 'SU'  # ('AUTO', 'CA', 'UK2', 'US', 'SU') SU==metric
 TS_READ_API_KEY = ''
 TS_CHANNEL_ID = ''
 
+# Running without sensor
+SENSOR = 0  # set to '1' to collect sensor data
+
 # Running environment
 RUN_ENV = ''  # 'production' or 'test'
 ```
 
-#### Note:
-The micropython script needs your ThingSpeak _WRITE API KEY_ and the _.env_ your _READ API KEY_.
+#### Notes:
++ The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented for current temperature.
++ The units for temperature and wind speed will be selected automatically.
++ The _micropython_ script needs your ThingSpeak _WRITE API KEY_ and you must put your ThingSpeak _READ API KEY_ into the _.env_.
 
 ### Testing:
-You can test the whole thing on your own machine (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
+You can test the whole thing on your own PC (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
 ``` shell
 python weather-refresh-2in7.py
 ```
 
-and look for _frame[123].bmp_.
+and look for _frame[123].bmp_. In this case the EPD and Raspberry-specific stuff is not included, only the frames are rendered which you can check with an image viewer. 
 
 ## The sensor
 The sensor station is a Wemos Mini D1 ESP8266-based board operating via 2xAA step-up to 5V. The temperature sensor is a DS18B20 which is connected to the D1 pin and the battery voltage is measured on the A0 ADC. The sensor weaks up from deepsleep every every five minutes and sends the data to a [ThingSpeak](https://thingspeak.com/) channel. Depending on your powering setup it can last from weeks to months. The Wemos board runs [micropython](http://micropython.org/) which is far easier to use (for me) than Arduino's C++. The script is fairly simple and can be easily customized for more complex DHT sensors - micropython has everything you need for that, just head over to the documentation.

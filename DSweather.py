@@ -77,13 +77,14 @@ def fetchDarkSkyWeather():
         'icon':                 cur_weather.icon,
         'precip_probability':   round(int(daily_weather[0].precip_probability * 100), -1),
         'precip_type':          cur_weather.precip_type,
-        'temperature':          cur_weather.temperature,
+        'temperature':          round(cur_weather.temperature, 1),
         'humidity':             int(cur_weather.humidity * 100),
         'wind_speed':           cur_weather.wind_speed,
         'wind_bearing':         cur_weather.wind_bearing,
         'pressure':             round(cur_weather.pressure),
         'wind_direction':       wind_direction(cur_weather.wind_bearing),
-        'cloud_cover':          int(cur_weather.cloud_cover * 100)
+        'cloud_cover':          int(cur_weather.cloud_cover * 100),
+        'units':                forecast.flags.units
     }
 
     # DAILY
