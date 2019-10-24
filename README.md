@@ -4,7 +4,7 @@
 
 This is a combined RaspberryPi and ESP8266 project for measuring temperature and displaying sensor data and forecast info on the Waveshare 2.7inch E-Paper HAT.
 
-The microcontroller uploads outside temperature to a public IoT data collector site then the Raspberry Pi collects it along with  weather forecast and shows them on a nice E-Paper display. All you need to do is to get the stuff and follow the installation steps. Some bit of extra reading is needed if your are not familiar with ESP8266 development boards and micropython however the Raspberry setup is far easier and you can get the current data from the weather provider as well and leave the ESP stuff. The sensor just adds accuracy and a nice learning experience regarding microcontrollers.
+The micro-controller uploads outside temperature to a public IoT data collector site then the Raspberry Pi collects it along with  weather forecast and shows them on a nice E-Paper display. All you need to do is to get the stuff and follow the installation steps. Some bit of extra reading is needed if your are not familiar with ESP8266 development boards and _micropython_ however the Raspberry setup is far easier and you can get the current data from the weather provider as well and leave the ESP stuff. The sensor just adds accuracy and a nice learning experience regarding micro-controllers.
 
 It is mainly a fun project which you can extend freely. I hope you'll enjoy building it as well.
 
@@ -16,13 +16,13 @@ It is mainly a fun project which you can extend freely. I hope you'll enjoy buil
 
 ## The PI and the E-Ink display
 
-For keeping things simple I created two scripts which run simultaneously. The one fetches sensor data and forecast the other handles button events.
-The refresh scipt runs every 5 minutes and generates three frames which can be displayed with the help of the buttons of the HAT.
+The main script fetches sensor data and forecast and handles button events as well.
+The refresh runs every 5 minutes and generates three frames which can be displayed with the help of the buttons of the HAT.
 For the output see the screenshots dir. Sensor data is pulled from ThingSpeak, forecast from DarkSky.
 
 This E-Paper HAT has four buttons which are used in this project according to the followings:
 1. Frame1: sensor temp and today's min-max temperature, current wind speed and direction and precipitation forecast along for today with short weather condition text
-2. Frame2: sensor temp, current humidity, air pressure, windspeed and direction, sunrise/sunset
+2. Frame2: sensor temp, current humidity, air pressure, wind speed and direction, sunrise/sunset
 3. Frame3: 4-day weather forecast
 4. Clear display
 
@@ -46,14 +46,11 @@ Gathers weather info from DarSky. It fetches current weather and 4-days forecast
 
     python DSweather.py
 
-#### _weather-button-2in7.py_
-
-Listens to button events and according to the input it clears the display or shows the relevant frame.
-
 #### _weather-refresh-2in7.py_
 
 The main script creates frames from data collected from ThingSpeak and DarkSky. It runs every 5 minutes and refreshes the E-Paper display with the first frame.
-For verbose output you should toggle the _DEBUG_ variable and for testing without E-Paper HAT the *test_mode* variable shoud be set to _True_.
+It also listens to button events and depending on the input it clears the display or shows the relevant frame.
+For verbose output you should toggle the _DEBUG_ variable and for testing without E-Paper HAT the *test_mode* variable should be set to _True_.
 
     python weather-refresh-2in7.py
 
@@ -80,13 +77,12 @@ git clone https://github.com/arutz12/Raspberry-Weather-EPD-2in7
 pip install -r requirements.txt
 ```
 
-### 5. Edit paths and install systemd services:
+### 5. Edit paths and install _systemd_ service:
 
 ``` shell
-sudo cp weather.service epd-button.service /lib/systemd/system
+sudo cp weather.service /lib/systemd/system
 cd /etc/systemd/system/multi-user.target.wants
 sudo ln -s /lib/systemd/system/weather.service
-sudo ln -s /lib/systemd/system/epd-button.service
 ```
 
 ### 6. Rename the _.env.sample_ to _.env_ and set all the variables 
@@ -127,7 +123,7 @@ and look for _frame[123].bmp_.
 The sensor station is a Wemos Mini D1 ESP8266-based board operating via 2xAA step-up to 5V. The temperature sensor is a DS18B20 which is connected to the D1 pin and the battery voltage is measured on the A0 ADC. The sensor weaks up from deepsleep every every five minutes and sends the data to a [ThingSpeak](https://thingspeak.com/) channel. Depending on your powering setup it can last from weeks to months. The Wemos board runs [micropython](http://micropython.org/) which is far easier to use (for me) than Arduino's C++. The script is fairly simple and can be easily customized for more complex DHT sensors - micropython has everything you need for that, just head over to the documentation.
 
 #### Note
-you will need the _urequests_ micropython module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
+you will need the _urequests_ _micropython_ module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
 
 I put everything (sensor, devboard, batteries) into a waterresistant box and found some place outside, didn't bothered with the aesthetics. (If you're interested I can thoroughly detail the sensor cabling however you can find tons of info on the net, you need a breadboard a bunch of jumper cables and you're done.)
 
