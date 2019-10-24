@@ -111,12 +111,12 @@ SENSOR = 0  # set to '1' to collect sensor data
 RUN_ENV = ''  # 'production' or 'test'
 ```
 
-#### Notes:
+#### Notes
 > + The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented as current temperature.
 > + The units for temperature and wind speed will be selected automatically.
 > + The _micropython_ script needs your ThingSpeak *WRITE_API_KEY* and you must put your ThingSpeak *READ_API_KEY* into the _.env_ file.
 
-### Testing:
+### Testing
 You can test the whole thing on your own PC (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
 ``` shell
 python weather-refresh-2in7.py
@@ -162,7 +162,7 @@ WIFI_DNS = '192.168.1.1'
 
 ```
 
-## Misc:
+## Misc
 If you don't want to 3D-print a case the [Pimoroni Pibow Coupé](https://shop.pimoroni.com/products/pibow-coupe-for-raspberry-pi-3-b-plus) can be a good choice for RPI 2/3B/3B+.
 
 ## Contact
