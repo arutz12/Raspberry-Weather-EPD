@@ -7,7 +7,7 @@
 # Copyright by Antal Rutz
 #
 # Documentation and full source code:
-# https://github.com/arutz12/Raspberry-Weather-EPD-2in7
+# https://github.com/arutz12/Raspberry-Weather-EPD
 # 
 
 import machine

@@ -67,7 +67,7 @@ Both DarkSky and ThingSpeak are free for limited personal usage.
 
 ``` c++
 cd ~
-git clone https://github.com/arutz12/Raspberry-Weather-EPD-2in7
+git clone https://github.com/arutz12/Raspberry-Weather-EPD
 ```
 
 ### 3. Optional (but recommended): create a virtual python environment
