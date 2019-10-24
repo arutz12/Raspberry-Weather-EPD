@@ -34,17 +34,17 @@ I borrowed the skeleton of the refresh script from [here](https://diyprojects.io
 ### Scripts
 
 
+#### _DSweather.py_
+
+Gathers weather info from DarkSky. It fetches current weather and 4-days forecast. Testing:
+
+    python DSweather.py
+
 #### _TSfetch.py_
 
 Collects sensor data from ThingSpeak. If you want to test just run it standalone:
 
     python TSfetch.py
-
-#### _DSweather.py_
-
-Gathers weather info from DarSky. It fetches current weather and 4-days forecast. Testing:
-
-    python DSweather.py
 
 #### _weather-refresh-2in7.py_
 
