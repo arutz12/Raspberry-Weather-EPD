@@ -112,9 +112,9 @@ RUN_ENV = ''  # 'production' or 'test'
 ```
 
 #### Notes:
-+ The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented for current temperature.
-+ The units for temperature and wind speed will be selected automatically.
-+ The _micropython_ script needs your ThingSpeak _WRITE API KEY_ and you must put your ThingSpeak _READ API KEY_ into the _.env_.
+    + The _SENSOR_ global var needs to be set to _1_ if you have sensor otherwise the DarkSky data will be presented for current temperature.
+    + The units for temperature and wind speed will be selected automatically.
+    + The _micropython_ script needs your ThingSpeak _WRITE API KEY_ and you must put your ThingSpeak _READ API KEY_ into the _.env_.
 
 ### Testing:
 You can test the whole thing on your own PC (virtual environment recommended) by setting the RUN_MODE to _test_ in _.env_. Then run
@@ -128,9 +128,9 @@ and look for _frame[123].bmp_. In this case the EPD and Raspberry-specific stuff
 The sensor station is a Wemos Mini D1 ESP8266-based board operating via 2xAA step-up to 5V. The temperature sensor is a DS18B20 which is connected to the D1 pin and the battery voltage is measured on the A0 ADC. The sensor wakes up from deepsleep every every five minutes and sends the data to a [ThingSpeak](https://thingspeak.com/) channel. Depending on your powering setup the measuring unit can last from weeks to months without changing batteries. The Wemos board runs [micropython](http://micropython.org/) which is far easier to use (for me) than Arduino's C++. The script is fairly simple and can be easily customized for more complex DHT sensors - micropython has everything you need for that, just head over to the documentation.
 
 #### Note
-you will need the _urequests_ _micropython_ module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
+    You will need the _urequests_ _micropython_ module which you can obtain from [here](https://github.com/pfalcon/pycopy-lib/blob/master/urequests/urequests) or [here](https://github.com/micropython/micropython-lib/blob/master/urequests). Either build the firmware with it or just copy the file to the root dir.
 
-I put everything (sensor, devboard, batteries) into a waterresistant box and found some place outside, didn't bothered with the aesthetics. (If you're interested I can thoroughly detail the sensor cabling however you can find tons of info on the net, you need a breadboard a bunch of jumper cables and you're done.)
+I put everything (sensor, devboard, batteries) into a waterresistant box and found some place outside, didn't bothered with the aesthetics. (If you're interested I can thoroughly detail the sensor cabling however you can find tons of info on the net. You just need a breadboard, a bunch of jumper cables, connect the sensor and battery to the correct pins and you're done. Without any soldering.)
 
 ### Sensor setup
 
